@@ -1,0 +1,103 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  avatar    String?
+  gitlabId  String   @unique
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  projects Project[]
+  auditLogs AuditLog[]
+
+  @@map("users")
+}
+
+model Project {
+  id          String      @id @default(cuid())
+  name        String      @unique
+  description String?
+  gitlabId    String      @unique
+  gitlabUrl   String
+  status      ProjectStatus @default(ACTIVE)
+  domain      String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  userId      String
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  pipelines   Pipeline[]
+  auditLogs   AuditLog[]
+
+  @@map("projects")
+}
+
+model Pipeline {
+  id          String        @id @default(cuid())
+  gitlabId    String        @unique
+  status      PipelineStatus @default(PENDING)
+  stage       String?
+  startedAt   DateTime?
+  finishedAt  DateTime?
+  duration    Int?          // in seconds
+  logs        String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  projectId   String
+  project     Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("pipelines")
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  action    String
+  details   Json?
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  projectId String?
+  project   Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+
+  @@map("audit_logs")
+}
+
+enum Role {
+  ADMIN
+  MAINTAINER
+  USER
+}
+
+enum ProjectStatus {
+  ACTIVE
+  INACTIVE
+  DELETED
+}
+
+enum PipelineStatus {
+  PENDING
+  RUNNING
+  SUCCESS
+  FAILED
+  CANCELED
+  SKIPPED
+}
