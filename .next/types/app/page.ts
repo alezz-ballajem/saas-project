@@ -1,4 +1,4 @@
-// File: /home/alezz/Sonod-Web-Projects/nextjs-templates/sonod-projects-manager/app/page.tsx
+// File: /home/user/saas-project/app/page.tsx
 import * as entry from '../../../app/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

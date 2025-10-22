@@ -1,4 +1,4 @@
-// File: /home/alezz/Sonod-Web-Projects/nextjs-templates/sonod-projects-manager/app/api/auth/[...nextauth]/route.ts
+// File: /home/user/saas-project/app/api/auth/[...nextauth]/route.ts
 import * as entry from '../../../../../../app/api/auth/[...nextauth]/route.js'
 import type { NextRequest } from 'next/server.js'
 

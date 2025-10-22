@@ -3,10 +3,14 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   output: "standalone",
   images: {
-    domains: ['gitlab.sonod.tech'],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**.gitlab.sonod.tech",
+      },
+    ],
   },
   eslint: {
-    // Skip ESLint during build to avoid workspace root config issues
     ignoreDuringBuilds: true,
   },
   env: {

@@ -221,21 +221,22 @@ export class GitLabClient {
   }
 }
 
-// Singleton instance
 let gitlabClient: GitLabClient | null = null;
+let currentHost: string | null = null;
 
 export function getGitLabClient(): GitLabClient {
-  if (!gitlabClient) {
-    const baseURL = process.env.GITLAB_HOST || 'https://gitlab.sonod.tech';
-    const token = process.env.GITLAB_TOKEN;
-    
-    if (!token) {
-      throw new Error('GITLAB_TOKEN environment variable is required');
-    }
-    
+  const baseURL = process.env.GITLAB_HOST || 'https://gitlab.sonod.tech';
+  const token = process.env.GITLAB_TOKEN;
+
+  if (!token) {
+    throw new Error('GITLAB_TOKEN environment variable is required');
+  }
+
+  if (!gitlabClient || currentHost !== baseURL) {
+    currentHost = baseURL;
     gitlabClient = new GitLabClient(baseURL, token);
   }
-  
+
   return gitlabClient;
 }
 

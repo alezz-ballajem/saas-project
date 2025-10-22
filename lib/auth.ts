@@ -5,18 +5,22 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
+const gitlabHost = process.env.GITLAB_HOST || 'https://gitlab.sonod.tech';
+
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     GitLabProvider({
       clientId: process.env.GITLAB_CLIENT_ID!,
       clientSecret: process.env.GITLAB_CLIENT_SECRET!,
-      issuer: process.env.GITLAB_HOST || 'https://gitlab.sonod.tech',
       authorization: {
+        url: `${gitlabHost}/oauth/authorize`,
         params: {
           scope: 'read_user read_api api',
         },
       },
+      token: `${gitlabHost}/oauth/token`,
+      userinfo: `${gitlabHost}/api/v4/user`,
     }),
   ],
   callbacks: {
