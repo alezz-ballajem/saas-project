@@ -12,17 +12,17 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         className={clsx(
-          'inline-flex items-center justify-center rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-dark-900',
+          'inline-flex items-center justify-center rounded-md font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-github-bg',
           {
-            'btn-primary': variant === 'primary',
-            'btn-secondary': variant === 'secondary',
-            'bg-transparent hover:bg-white/10 text-white border border-white/20': variant === 'ghost',
-            'bg-red-500 hover:bg-red-600 text-white': variant === 'danger',
+            'github-button-primary': variant === 'primary',
+            'github-button': variant === 'secondary',
+            'bg-transparent hover:bg-github-bg-tertiary text-github-text border border-github-border': variant === 'ghost',
+            'bg-github-danger hover:bg-github-danger/90 text-white': variant === 'danger',
           },
           {
-            'px-3 py-2 text-sm': size === 'sm',
-            'px-6 py-3 text-base': size === 'md',
-            'px-8 py-4 text-lg': size === 'lg',
+            'px-3 py-1.5 text-sm': size === 'sm',
+            'px-4 py-2 text-sm': size === 'md',
+            'px-6 py-3 text-base': size === 'lg',
           },
           className
         )}

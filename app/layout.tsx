@@ -4,14 +4,14 @@ import { Providers } from './providers';
 import { Toaster } from 'react-hot-toast';
 
 export const metadata: Metadata = {
-  title: 'Sonod Projects Manager',
-  description: 'Explore the dynamic world of project management through our meticulously designed platform, where form meets function. Transform your development workflow with seamless automation, secure deployments, and versatile features.',
-  keywords: ['project management', 'gitlab', 'devops', 'automation', 'deployment'],
-  authors: [{ name: 'Alezz Ballajem', url: 'https://sonod.tech' }],
+  title: 'GitHub Projects Manager',
+  description: 'A GitHub-inspired project management platform for modern development teams. Streamline your workflow with seamless automation, secure deployments, and powerful collaboration tools.',
+  keywords: ['project management', 'github', 'devops', 'automation', 'deployment', 'collaboration'],
+  authors: [{ name: 'Alezz Ballajem', url: 'https://github.com/alezz-ballajem' }],
   creator: 'Alezz Ballajem',
   openGraph: {
-    title: 'Sonod Projects Manager',
-    description: 'Transform your development workflow with seamless automation and secure deployments.',
+    title: 'GitHub Projects Manager',
+    description: 'Streamline your development workflow with GitHub-inspired project management tools.',
     type: 'website',
     locale: 'en_US',
   },
@@ -24,16 +24,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body>
+      <body className="bg-github-bg text-github-text">
         <Providers>
           {children}
           <Toaster
             position="top-right"
             toastOptions={{
               style: {
-                background: 'rgba(15, 23, 42, 0.9)',
-                color: '#fff',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
+                background: '#161b22',
+                color: '#f0f6fc',
+                border: '1px solid #30363d',
                 backdropFilter: 'blur(10px)',
               },
             }}

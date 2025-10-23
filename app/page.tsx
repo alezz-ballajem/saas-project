@@ -61,15 +61,15 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-dark-900">
+    <div className="min-h-screen bg-github-bg">
       <Header />
       
       {/* Hero Section */}
       <section className="relative overflow-hidden">
         {/* Background Effects */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-900/20 via-transparent to-secondary-900/20" />
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-secondary-500/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute inset-0 bg-gradient-to-br from-github-bg-secondary/50 via-transparent to-github-bg-tertiary/30" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-github-accent/5 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-github-accent-secondary/5 rounded-full blur-3xl animate-pulse" />
         
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -82,24 +82,24 @@ export default function HomePage() {
             >
               <div className="space-y-4">
                 <motion.h1 
-                  className="text-5xl lg:text-6xl font-bold text-white leading-tight"
+                  className="text-5xl lg:text-6xl font-bold text-github-text leading-tight"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
                   transition={{ duration: 0.6, delay: 0.1 }}
                 >
-                  We Provide You With A{' '}
-                  <span className="gradient-text">Safe And Reliable</span>{' '}
-                  Project Management Solution
+                  Build, Deploy, and{' '}
+                  <span className="text-github-accent">Collaborate</span>{' '}
+                  Like Never Before
                 </motion.h1>
                 
                 <motion.p 
-                  className="text-xl text-white/70 leading-relaxed"
+                  className="text-xl text-github-text-secondary leading-relaxed"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
                 >
-                  Explore the dynamic world of project management through our meticulously designed platform, 
-                  where form meets function. Transform your development workflow with seamless automation.
+                  A GitHub-inspired project management platform that brings your team together. 
+                  Streamline workflows, automate deployments, and ship faster with confidence.
                 </motion.p>
               </div>
 
@@ -113,12 +113,12 @@ export default function HomePage() {
                   {[1, 2, 3, 4].map((i) => (
                     <div
                       key={i}
-                      className="h-10 w-10 rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 border-2 border-dark-900"
+                      className="h-10 w-10 rounded-full bg-github-accent border-2 border-github-bg"
                     />
                   ))}
                 </div>
-                <div className="text-white/60">
-                  <span className="font-semibold text-white">15K+</span> satisfied developers
+                <div className="text-github-text-secondary">
+                  <span className="font-semibold text-github-text">15K+</span> developers building together
                 </div>
               </motion.div>
 
@@ -161,43 +161,43 @@ export default function HomePage() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="relative"
             >
-              <div className="glass-card p-8 space-y-6">
+              <div className="github-card p-8 space-y-6">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-xl font-semibold text-white">Project Dashboard</h3>
-                  <SparklesIcon className="h-6 w-6 text-primary-400" />
+                  <h3 className="text-xl font-semibold text-github-text">Project Dashboard</h3>
+                  <SparklesIcon className="h-6 w-6 text-github-accent" />
                 </div>
                 
                 <div className="space-y-4">
                   <div className="flex items-center space-x-3">
-                    <div className="h-3 w-3 rounded-full bg-green-500 animate-pulse" />
-                    <span className="text-white/80">nextjs-demo11</span>
-                    <span className="text-green-400 text-sm">Deployed</span>
+                    <div className="h-3 w-3 rounded-full bg-github-success animate-pulse" />
+                    <span className="text-github-text-secondary">nextjs-demo11</span>
+                    <span className="text-github-success text-sm">Deployed</span>
                   </div>
                   
                   <div className="flex items-center space-x-3">
-                    <div className="h-3 w-3 rounded-full bg-yellow-500 animate-pulse" />
-                    <span className="text-white/80">nextjs-demo12</span>
-                    <span className="text-yellow-400 text-sm">Building</span>
+                    <div className="h-3 w-3 rounded-full bg-github-warning animate-pulse" />
+                    <span className="text-github-text-secondary">nextjs-demo12</span>
+                    <span className="text-github-warning text-sm">Building</span>
                   </div>
                   
                   <div className="flex items-center space-x-3">
-                    <div className="h-3 w-3 rounded-full bg-blue-500 animate-pulse" />
-                    <span className="text-white/80">nextjs-demo13</span>
-                    <span className="text-blue-400 text-sm">Queued</span>
+                    <div className="h-3 w-3 rounded-full bg-github-accent animate-pulse" />
+                    <span className="text-github-text-secondary">nextjs-demo13</span>
+                    <span className="text-github-accent text-sm">Queued</span>
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-white/10">
+                <div className="pt-4 border-t border-github-border">
                   <div className="flex justify-between text-sm">
-                    <span className="text-white/60">Active Projects</span>
-                    <span className="text-white font-semibold">3</span>
+                    <span className="text-github-text-tertiary">Active Projects</span>
+                    <span className="text-github-text font-semibold">3</span>
                   </div>
                 </div>
               </div>
 
               {/* Floating Elements */}
               <motion.div
-                className="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-2xl opacity-20"
+                className="absolute -top-4 -right-4 w-20 h-20 bg-github-accent rounded-2xl opacity-20"
                 animate={{ 
                   y: [0, -10, 0],
                   rotate: [0, 5, 0]
@@ -209,7 +209,7 @@ export default function HomePage() {
                 }}
               />
               <motion.div
-                className="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-r from-secondary-500 to-pink-500 rounded-xl opacity-20"
+                className="absolute -bottom-4 -left-4 w-16 h-16 bg-github-accent-secondary rounded-xl opacity-20"
                 animate={{ 
                   y: [0, 10, 0],
                   rotate: [0, -5, 0]
@@ -234,10 +234,10 @@ export default function HomePage() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold text-white mb-4">
+            <h2 className="text-4xl font-bold text-github-text mb-4">
               Powerful Features for Modern Development
             </h2>
-            <p className="text-xl text-white/70 max-w-3xl mx-auto">
+            <p className="text-xl text-github-text-secondary max-w-3xl mx-auto">
               From seamless project creation to real-time monitoring, 
               experience the future of DevOps automation.
             </p>
@@ -267,7 +267,7 @@ export default function HomePage() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 bg-gradient-to-r from-primary-900/20 to-secondary-900/20">
+      <section className="py-20 bg-github-bg-secondary">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
@@ -278,10 +278,10 @@ export default function HomePage() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="text-center"
               >
-                <div className="text-4xl font-bold gradient-text mb-2">
+                <div className="text-4xl font-bold text-github-accent mb-2">
                   {stat.value}
                 </div>
-                <div className="text-white/60">{stat.label}</div>
+                <div className="text-github-text-secondary">{stat.label}</div>
               </motion.div>
             ))}
           </div>
@@ -297,12 +297,12 @@ export default function HomePage() {
             transition={{ duration: 0.6 }}
             className="text-center"
           >
-            <Card variant="gradient" className="max-w-4xl mx-auto">
+            <Card variant="glass" className="max-w-4xl mx-auto">
               <CardContent className="p-12 text-center">
-                <h2 className="text-4xl font-bold text-white mb-4">
+                <h2 className="text-4xl font-bold text-github-text mb-4">
                   Ready to Transform Your Workflow?
                 </h2>
-                <p className="text-xl text-white/70 mb-8 max-w-2xl mx-auto">
+                <p className="text-xl text-github-text-secondary mb-8 max-w-2xl mx-auto">
                   Join thousands of developers who have revolutionized their deployment process 
                   with our cutting-edge project management platform.
                 </p>
