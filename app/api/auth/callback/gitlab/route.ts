@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
     const user = await GitLabAuth.createOrUpdateUser(gitlabUser);
 
     // Set session cookie
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     cookieStore.set('session-token', user.id, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',

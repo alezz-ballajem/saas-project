@@ -53,8 +53,8 @@ export function Header() {
             ) : session ? (
               <div className="flex items-center space-x-4">
                 <div className="hidden sm:block text-right">
-                  <p className="text-sm font-medium text-github-text">{session.user?.name}</p>
-                  <p className="text-xs text-github-text-tertiary">{session.user?.email}</p>
+                  <p className="text-sm font-medium text-github-text">{session?.name}</p>
+                  <p className="text-xs text-github-text-tertiary">{session?.email}</p>
                 </div>
                 <div className="relative group">
                   <button className="flex h-8 w-8 items-center justify-center rounded-full bg-github-accent">
