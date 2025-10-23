@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes, forwardRef } from 'react';
 import clsx from 'clsx';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'ghost' | 'danger';
+  variant?: 'primary' | 'secondary' | 'ghost' | 'danger' | 'success' | 'outline';
   size?: 'sm' | 'md' | 'lg';
   loading?: boolean;
 }
@@ -17,7 +17,9 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             'github-button-primary': variant === 'primary',
             'github-button': variant === 'secondary',
             'bg-transparent hover:bg-github-bg-tertiary text-github-text border border-github-border': variant === 'ghost',
-            'bg-github-danger hover:bg-github-danger/90 text-white': variant === 'danger',
+            'github-button-danger': variant === 'danger',
+            'github-button-success': variant === 'success',
+            'bg-transparent hover:bg-github-bg-tertiary text-github-text border border-github-border hover:border-github-border-tertiary': variant === 'outline',
           },
           {
             'px-3 py-1.5 text-sm': size === 'sm',

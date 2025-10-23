@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { useSession } from 'next-auth/react';
+import { useAuth } from '@/lib/session';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Header } from '@/components/layout/Header';
@@ -53,7 +53,7 @@ const stats = [
 ];
 
 export default function HomePage() {
-  const { data: session } = useSession();
+  const { user: session, loading } = useAuth();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {

@@ -47,15 +47,27 @@
   }
   
   .github-button {
-    @apply bg-github-bg-secondary hover:bg-github-bg-tertiary border border-github-border hover:border-github-text-tertiary text-github-text font-medium px-4 py-2 rounded-md transition-all duration-200;
+    @apply bg-github-bg-secondary hover:bg-github-bg-tertiary border border-github-border hover:border-github-border-tertiary text-github-text font-medium px-4 py-2 rounded-md transition-all duration-200;
   }
   
   .github-button-primary {
-    @apply bg-github-accent hover:bg-github-accent/90 text-white font-medium px-4 py-2 rounded-md transition-all duration-200;
+    @apply bg-github-accent hover:bg-github-accent-hover text-white font-medium px-4 py-2 rounded-md transition-all duration-200;
+  }
+  
+  .github-button-success {
+    @apply bg-github-success hover:bg-github-success-hover text-white font-medium px-4 py-2 rounded-md transition-all duration-200;
+  }
+  
+  .github-button-danger {
+    @apply bg-github-danger hover:bg-github-danger-hover text-white font-medium px-4 py-2 rounded-md transition-all duration-200;
   }
   
   .github-input {
     @apply bg-github-bg border border-github-border rounded-md px-3 py-2 text-github-text placeholder-github-text-tertiary focus:border-github-accent focus:ring-1 focus:ring-github-accent/20 transition-all duration-200;
+  }
+  
+  .github-input:focus {
+    @apply outline-none ring-2 ring-github-accent/20 border-github-accent;
   }
   
   .github-text-muted {
