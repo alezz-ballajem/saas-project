@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
+import { useAuth } from '@/lib/session';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
@@ -19,17 +19,17 @@ import { getProjects, triggerProjectPipeline, deleteProject } from '@/lib/action
 import toast from 'react-hot-toast';
 
 export default function ProjectsPage() {
-  const { data: session, status } = useSession();
+  const { user: session, loading } = useAuth();
   const [projects, setProjects] = useState<any[]>([]);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    if (status === 'authenticated') {
+    if (session && !loading) {
       loadProjects();
     }
-  }, [status]);
+  }, [session, loading]);
 
   const loadProjects = async () => {
     try {
@@ -88,24 +88,24 @@ export default function ProjectsPage() {
     (project.description && project.description.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
-  if (status === 'loading' || isLoading) {
+  if (loading || isLoading) {
     return (
-      <div className="min-h-screen bg-dark-900 flex items-center justify-center">
+      <div className="min-h-screen bg-github-bg flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto mb-4"></div>
-          <p className="text-white/60">Loading projects...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-github-accent mx-auto mb-4"></div>
+          <p className="text-github-text-secondary">Loading projects...</p>
         </div>
       </div>
     );
   }
 
-  if (status === 'unauthenticated') {
+  if (!session) {
     return (
-      <div className="min-h-screen bg-dark-900 flex items-center justify-center">
+      <div className="min-h-screen bg-github-bg flex items-center justify-center">
         <Card variant="glass" className="max-w-md mx-auto">
           <CardContent className="p-8 text-center">
-            <h2 className="text-2xl font-bold text-white mb-4">Authentication Required</h2>
-            <p className="text-white/60 mb-6">Please sign in to view projects.</p>
+            <h2 className="text-2xl font-bold text-github-text mb-4">Authentication Required</h2>
+            <p className="text-github-text-secondary mb-6">Please sign in to view projects.</p>
             <Button onClick={() => window.location.href = '/api/auth/signin'}>
               Sign In
             </Button>
@@ -116,7 +116,7 @@ export default function ProjectsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-dark-900">
+    <div className="min-h-screen bg-github-bg">
       <Header />
       
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -129,8 +129,8 @@ export default function ProjectsPage() {
         >
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-4xl font-bold text-white mb-2">Projects</h1>
-              <p className="text-white/60 text-lg">
+              <h1 className="text-4xl font-bold text-github-text mb-2">Projects</h1>
+              <p className="text-github-text-secondary text-lg">
                 Manage and monitor your Next.js projects.
               </p>
             </div>
@@ -153,13 +153,13 @@ export default function ProjectsPage() {
             <CardContent className="p-6">
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="flex-1 relative">
-                  <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white/40" />
+                  <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-github-text-tertiary" />
                   <input
                     type="text"
                     placeholder="Search projects..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/20 rounded-xl text-white placeholder-white/50 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition-all duration-300"
+                    className="w-full pl-10 pr-4 py-3 bg-github-bg-secondary border border-github-border rounded-xl text-github-text placeholder-github-text-tertiary focus:border-github-accent focus:ring-2 focus:ring-github-accent/20 transition-all duration-300"
                   />
                 </div>
                 
@@ -183,11 +183,11 @@ export default function ProjectsPage() {
           {filteredProjects.length === 0 ? (
             <Card variant="glass" className="text-center py-12">
               <CardContent>
-                <RocketLaunchIcon className="h-16 w-16 text-white/40 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-white mb-2">
+                <RocketLaunchIcon className="h-16 w-16 text-github-text-tertiary mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-github-text mb-2">
                   {searchTerm ? 'No projects found' : 'No projects yet'}
                 </h3>
-                <p className="text-white/60 mb-6">
+                <p className="text-github-text-secondary mb-6">
                   {searchTerm 
                     ? 'Try adjusting your search terms.'
                     : 'Create your first Next.js project to get started with automated deployments.'

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
+import { useAuth } from '@/lib/session';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
@@ -19,7 +19,7 @@ import {
 import toast from 'react-hot-toast';
 
 export default function SettingsPage() {
-  const { data: session, status } = useSession();
+  const { user: session, loading } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSaveSettings = async () => {
