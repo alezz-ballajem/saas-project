@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
+import { useAuth } from '@/lib/session';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
@@ -19,7 +19,7 @@ import {
 import toast from 'react-hot-toast';
 
 export default function SettingsPage() {
-  const { data: session, status } = useSession();
+  const { user: session, loading } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSaveSettings = async () => {
@@ -35,24 +35,24 @@ export default function SettingsPage() {
     }
   };
 
-  if (status === 'loading') {
+  if (loading) {
     return (
-      <div className="min-h-screen bg-dark-900 flex items-center justify-center">
+      <div className="min-h-screen bg-github-bg flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto mb-4"></div>
-          <p className="text-white/60">Loading settings...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-github-accent mx-auto mb-4"></div>
+          <p className="text-github-text-secondary">Loading settings...</p>
         </div>
       </div>
     );
   }
 
-  if (status === 'unauthenticated') {
+  if (!session) {
     return (
-      <div className="min-h-screen bg-dark-900 flex items-center justify-center">
+      <div className="min-h-screen bg-github-bg flex items-center justify-center">
         <Card variant="glass" className="max-w-md mx-auto">
           <CardContent className="p-8 text-center">
-            <h2 className="text-2xl font-bold text-white mb-4">Authentication Required</h2>
-            <p className="text-white/60 mb-6">Please sign in to access settings.</p>
+            <h2 className="text-2xl font-bold text-github-text mb-4">Authentication Required</h2>
+            <p className="text-github-text-secondary mb-6">Please sign in to access settings.</p>
             <Button onClick={() => window.location.href = '/api/auth/signin'}>
               Sign In
             </Button>
@@ -63,7 +63,7 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-dark-900">
+    <div className="min-h-screen bg-github-bg">
       <Header />
       
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -74,8 +74,8 @@ export default function SettingsPage() {
           transition={{ duration: 0.6 }}
           className="mb-8"
         >
-          <h1 className="text-4xl font-bold text-white mb-2">Settings</h1>
-          <p className="text-white/60 text-lg">
+          <h1 className="text-4xl font-bold text-github-text mb-2">Settings</h1>
+          <p className="text-github-text-secondary text-lg">
             Manage your account and application preferences.
           </p>
         </motion.div>
@@ -91,22 +91,22 @@ export default function SettingsPage() {
             <Card variant="glass">
               <CardHeader>
                 <div className="flex items-center space-x-3">
-                  <div className="p-2 rounded-xl bg-gradient-to-r from-primary-500 to-secondary-500">
+                  <div className="p-2 rounded-xl bg-gradient-to-r from-github-accent to-github-accent-secondary">
                     <UserCircleIcon className="h-6 w-6 text-white" />
                   </div>
-                  <CardTitle className="text-white">Profile Settings</CardTitle>
+                  <CardTitle className="text-github-text">Profile Settings</CardTitle>
                 </div>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <Input
                     label="Full Name"
-                    defaultValue={session?.user?.name || ''}
+                    defaultValue={session?.name || ''}
                     placeholder="Enter your full name"
                   />
                   <Input
                     label="Email"
-                    defaultValue={session?.user?.email || ''}
+                    defaultValue={session?.email || ''}
                     placeholder="Enter your email"
                     disabled
                   />
@@ -136,7 +136,7 @@ export default function SettingsPage() {
           >
             <Card variant="glass">
               <CardHeader>
-                <CardTitle className="text-white">Quick Actions</CardTitle>
+                <CardTitle className="text-github-text">Quick Actions</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <Button variant="secondary" className="w-full justify-start">
@@ -160,20 +160,20 @@ export default function SettingsPage() {
 
             <Card variant="glass">
               <CardHeader>
-                <CardTitle className="text-white">System Info</CardTitle>
+                <CardTitle className="text-github-text">System Info</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <div className="flex justify-between text-sm">
-                  <span className="text-white/60">Version</span>
-                  <span className="text-white">1.0.0</span>
+                  <span className="text-github-text-secondary">Version</span>
+                  <span className="text-github-text">1.0.0</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-white/60">Environment</span>
-                  <span className="text-white">Production</span>
+                  <span className="text-github-text-secondary">Environment</span>
+                  <span className="text-github-text">Production</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-white/60">Last Updated</span>
-                  <span className="text-white">Today</span>
+                  <span className="text-github-text-secondary">Last Updated</span>
+                  <span className="text-github-text">Today</span>
                 </div>
               </CardContent>
             </Card>

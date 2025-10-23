@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useSession, signIn, signOut } from 'next-auth/react';
+import { useAuth } from '@/lib/session';
 import { Button } from '@/components/ui/Button';
 import { 
   Bars3Icon, 
@@ -13,7 +13,7 @@ import {
 } from '@heroicons/react/24/outline';
 
 export function Header() {
-  const { data: session, status } = useSession();
+  const { user: session, loading, signIn, signOut } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -48,13 +48,13 @@ export function Header() {
 
           {/* User Menu */}
           <div className="flex items-center space-x-4">
-            {status === 'loading' ? (
+            {loading ? (
               <div className="h-8 w-8 animate-pulse rounded-full bg-github-bg-tertiary" />
             ) : session ? (
               <div className="flex items-center space-x-4">
                 <div className="hidden sm:block text-right">
-                  <p className="text-sm font-medium text-github-text">{session.user?.name}</p>
-                  <p className="text-xs text-github-text-tertiary">{session.user?.email}</p>
+                  <p className="text-sm font-medium text-github-text">{session?.name}</p>
+                  <p className="text-xs text-github-text-tertiary">{session?.email}</p>
                 </div>
                 <div className="relative group">
                   <button className="flex h-8 w-8 items-center justify-center rounded-full bg-github-accent">
@@ -91,14 +91,14 @@ export function Header() {
               <div className="flex items-center space-x-3">
                 <Button
                   variant="ghost"
-                  onClick={() => signIn('gitlab')}
+                  onClick={() => signIn()}
                   className="github-button"
                 >
                   Sign In
                 </Button>
                 <Button
                   variant="primary"
-                  onClick={() => signIn('gitlab')}
+                  onClick={() => signIn()}
                   className="github-button-primary"
                 >
                   Get Started

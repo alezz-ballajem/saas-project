@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
+import { useAuth } from '@/lib/session';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
@@ -22,17 +22,17 @@ import { getRecentPipelines } from '@/lib/actions/pipeline-actions';
 import toast from 'react-hot-toast';
 
 export default function DashboardPage() {
-  const { data: session, status } = useSession();
+  const { user: session, loading } = useAuth();
   const [projects, setProjects] = useState<any[]>([]);
   const [recentPipelines, setRecentPipelines] = useState<any[]>([]);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (status === 'authenticated') {
+    if (session && !loading) {
       loadData();
     }
-  }, [status]);
+  }, [session, loading]);
 
   const loadData = async () => {
     try {
@@ -91,24 +91,24 @@ export default function DashboardPage() {
     }
   };
 
-  if (status === 'loading' || isLoading) {
+  if (loading || isLoading) {
     return (
-      <div className="min-h-screen bg-dark-900 flex items-center justify-center">
+      <div className="min-h-screen bg-github-bg flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto mb-4"></div>
-          <p className="text-white/60">Loading dashboard...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-github-accent mx-auto mb-4"></div>
+          <p className="text-github-text-secondary">Loading dashboard...</p>
         </div>
       </div>
     );
   }
 
-  if (status === 'unauthenticated') {
+  if (!session) {
     return (
-      <div className="min-h-screen bg-dark-900 flex items-center justify-center">
+      <div className="min-h-screen bg-github-bg flex items-center justify-center">
         <Card variant="glass" className="max-w-md mx-auto">
           <CardContent className="p-8 text-center">
-            <h2 className="text-2xl font-bold text-white mb-4">Authentication Required</h2>
-            <p className="text-white/60 mb-6">Please sign in to access the dashboard.</p>
+            <h2 className="text-2xl font-bold text-github-text mb-4">Authentication Required</h2>
+            <p className="text-github-text-secondary mb-6">Please sign in to access the dashboard.</p>
             <Button onClick={() => window.location.href = '/api/auth/signin'}>
               Sign In
             </Button>
@@ -150,7 +150,7 @@ export default function DashboardPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-dark-900">
+    <div className="min-h-screen bg-github-bg">
       <Header />
       
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -161,10 +161,10 @@ export default function DashboardPage() {
           transition={{ duration: 0.6 }}
           className="mb-8"
         >
-          <h1 className="text-4xl font-bold text-white mb-2">
-            Welcome back, {session?.user?.name?.split(' ')[0]}! 👋
+          <h1 className="text-4xl font-bold text-github-text mb-2">
+            Welcome back, {session?.name?.split(' ')[0]}! 👋
           </h1>
-          <p className="text-white/60 text-lg">
+          <p className="text-github-text-secondary text-lg">
             Manage your projects and monitor deployments from your dashboard.
           </p>
         </motion.div>
@@ -181,8 +181,8 @@ export default function DashboardPage() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-white/60 text-sm font-medium">{stat.label}</p>
-                    <p className="text-3xl font-bold text-white mt-1">{stat.value}</p>
+                    <p className="text-github-text-secondary text-sm font-medium">{stat.label}</p>
+                    <p className="text-3xl font-bold text-github-text mt-1">{stat.value}</p>
                   </div>
                   <div className={`p-3 rounded-xl ${stat.bg}`}>
                     <stat.icon className={`h-6 w-6 ${stat.color}`} />
@@ -201,7 +201,7 @@ export default function DashboardPage() {
           className="mb-8"
         >
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-white">Your Projects</h2>
+            <h2 className="text-2xl font-bold text-github-text">Your Projects</h2>
             <Button onClick={handleCreateProject}>
               <PlusIcon className="h-5 w-5 mr-2" />
               Create Project
@@ -211,9 +211,9 @@ export default function DashboardPage() {
           {projects.length === 0 ? (
             <Card variant="glass" className="text-center py-12">
               <CardContent>
-                <RocketLaunchIcon className="h-16 w-16 text-white/40 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-white mb-2">No projects yet</h3>
-                <p className="text-white/60 mb-6">
+                <RocketLaunchIcon className="h-16 w-16 text-github-text-tertiary mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-github-text mb-2">No projects yet</h3>
+                <p className="text-github-text-secondary mb-6">
                   Create your first Next.js project to get started with automated deployments.
                 </p>
                 <Button onClick={handleCreateProject}>
@@ -249,15 +249,15 @@ export default function DashboardPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <h2 className="text-2xl font-bold text-white mb-6">Recent Activity</h2>
+            <h2 className="text-2xl font-bold text-github-text mb-6">Recent Activity</h2>
             <Card variant="glass">
               <CardHeader>
-                <CardTitle className="text-white">Pipeline Activity</CardTitle>
+                <CardTitle className="text-github-text">Pipeline Activity</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   {recentPipelines.map((pipeline, index) => (
-                    <div key={pipeline.id} className="flex items-center justify-between p-4 bg-white/5 rounded-xl">
+                    <div key={pipeline.id} className="flex items-center justify-between p-4 bg-github-bg-tertiary rounded-xl">
                       <div className="flex items-center space-x-4">
                         <div className={`p-2 rounded-lg ${
                           pipeline.status === 'SUCCESS' ? 'bg-green-500/10' :
@@ -274,8 +274,8 @@ export default function DashboardPage() {
                           )}
                         </div>
                         <div>
-                          <p className="text-white font-medium">{pipeline.project?.name}</p>
-                          <p className="text-white/60 text-sm">
+                          <p className="text-github-text font-medium">{pipeline.project?.name}</p>
+                          <p className="text-github-text-secondary text-sm">
                             {pipeline.stage && `${pipeline.stage} • `}
                             {new Date(pipeline.createdAt).toLocaleString()}
                           </p>

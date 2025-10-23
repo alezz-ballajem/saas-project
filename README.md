@@ -1,15 +1,15 @@
-# Sonod Projects Manager
+# GitHub Projects Manager
 
-> Explore the dynamic world of project management through our meticulously designed platform, where form meets function. Transform your development workflow with seamless automation, secure deployments, and versatile features.
+> A GitHub-inspired project management platform that brings your team together. Streamline workflows, automate deployments, and ship faster with confidence.
 
-A beautiful, modern web application for managing Next.js projects with automated CI/CD pipelines, built with Next.js 15, TypeScript, and Tailwind CSS.
+A beautiful, modern web application for managing Next.js projects with automated CI/CD pipelines, built with Next.js 15, TypeScript, and Tailwind CSS. Features GitHub-like design and GitLab OAuth authentication.
 
 ## ✨ Features
 
 - 🚀 **Automated Project Creation** - Create new Next.js projects with a single click
 - 🔄 **Real-time Pipeline Monitoring** - Monitor deployment pipelines with live status updates
 - 🎨 **Beautiful UI** - Cracker-inspired design with glassmorphism effects and smooth animations
-- 🔐 **Secure Authentication** - GitLab OAuth integration with role-based access control
+- 🔐 **Secure Authentication** - Custom GitLab OAuth integration with gitlab.sonod.tech
 - 📊 **Analytics Dashboard** - Track project performance and deployment metrics
 - 🔧 **DevOps Integration** - Seamless integration with GitLab CI/CD and self-hosted runners
 
@@ -18,7 +18,7 @@ A beautiful, modern web application for managing Next.js projects with automated
 - **Frontend**: Next.js 15, React 18, TypeScript
 - **Styling**: Tailwind CSS, Framer Motion
 - **Database**: PostgreSQL with Prisma ORM
-- **Authentication**: NextAuth.js with GitLab OAuth
+- **Authentication**: Custom GitLab OAuth with gitlab.sonod.tech
 - **Deployment**: Docker, Nginx
 - **CI/CD**: GitLab CI/CD with self-hosted runners
 
@@ -40,21 +40,21 @@ cp env.example .env.local
 
 2. Configure your environment variables:
 ```env
-# GitLab Configuration
+# GitLab OAuth Configuration
 GITLAB_HOST=https://gitlab.sonod.tech
-GITLAB_TOKEN=your_gitlab_token_here
-GITLAB_GROUP_ID=your_nextjs_group_id
-
-# Database
-DATABASE_URL="postgresql://username:password@localhost:5432/sonod_projects_manager"
-
-# NextAuth Configuration
-NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=your_nextauth_secret_here
-
-# GitLab OAuth
 GITLAB_CLIENT_ID=your_oauth_app_client_id
 GITLAB_CLIENT_SECRET=your_oauth_app_client_secret
+
+# Database
+DATABASE_URL="postgresql://username:password@localhost:5432/github_projects_manager"
+
+# NextAuth Configuration (for session management)
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your_random_secret_here
+
+# GitLab API Configuration (for project management)
+GITLAB_TOKEN=your_gitlab_token_here
+GITLAB_GROUP_ID=your_nextjs_group_id
 
 # Pipeline Configuration
 PIPELINE_PROJECT_ID=228
@@ -66,6 +66,8 @@ HOST_TEST_USER=root
 BASE_PATH=/opt/nextjs
 TEMPLATE_PATH=/opt/nextjs/templates
 ```
+
+**Important**: See [GITLAB_SETUP_GUIDE.md](./GITLAB_SETUP_GUIDE.md) for detailed GitLab OAuth setup instructions.
 
 ### Development
 
@@ -132,9 +134,13 @@ sonod-projects-manager/
 
 ### GitLab Setup
 
-1. Create a GitLab OAuth application:
+**For detailed setup instructions, see [GITLAB_SETUP_GUIDE.md](./GITLAB_SETUP_GUIDE.md)**
+
+1. Create a GitLab OAuth application at `gitlab.sonod.tech`:
    - Go to GitLab → Settings → Applications
-   - Add redirect URI: `https://your-domain.com/api/auth/callback/gitlab`
+   - Add redirect URI: `http://localhost:3000/api/auth/callback/gitlab` (development)
+   - Add redirect URI: `https://your-domain.com/api/auth/callback/gitlab` (production)
+   - Select scopes: `read_user`, `read_api`, `api`
    - Note the Client ID and Client Secret
 
 2. Create a Personal Access Token:
@@ -149,7 +155,7 @@ sonod-projects-manager/
 
 1. Create PostgreSQL database:
 ```sql
-CREATE DATABASE sonod_projects_manager;
+CREATE DATABASE github_projects_manager;
 ```
 
 2. Run Prisma migrations:
@@ -168,11 +174,14 @@ The application is designed to work with your existing infrastructure:
 
 ## 🎨 Design System
 
-### Color Palette
-- **Primary**: Blue gradient (`#0ea5e9` to `#0284c7`)
-- **Secondary**: Purple gradient (`#d946ef` to `#c026d3`)
-- **Accent**: Green (`#22c55e`)
-- **Dark**: Deep blue (`#0f172a`)
+### Color Palette (GitHub-inspired)
+- **Background**: GitHub dark (`#0d1117`)
+- **Secondary**: GitHub secondary (`#161b22`)
+- **Border**: GitHub border (`#30363d`)
+- **Text**: GitHub text (`#f0f6fc`)
+- **Accent**: GitHub blue (`#0969da`)
+- **Success**: GitHub green (`#3fb950`)
+- **Danger**: GitHub red (`#f85149`)
 
 ### Typography
 - **Font**: Inter (Google Fonts)
@@ -193,7 +202,7 @@ The application is fully responsive with breakpoints:
 
 ## 🔒 Security
 
-- **Authentication**: GitLab OAuth with secure session management
+- **Authentication**: Custom GitLab OAuth with gitlab.sonod.tech
 - **Rate Limiting**: API endpoints protected with rate limits
 - **HTTPS**: SSL/TLS encryption for all communications
 - **CORS**: Proper cross-origin resource sharing configuration
@@ -246,7 +255,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👨‍💻 Author
 
 **Alezz Ballajem** - DevOps Lead
-- Crafted with ❤️ for the Sonod team
+- Crafted with ❤️ for modern development teams
 - Transforming development workflows through automation
 
 ---

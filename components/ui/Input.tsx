@@ -12,7 +12,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="space-y-2">
         {label && (
-          <label className="block text-sm font-medium text-white/80">
+          <label className="block text-sm font-medium text-github-text">
             {label}
           </label>
         )}
@@ -20,7 +20,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           className={clsx(
             'input-field w-full',
             {
-              'border-red-500 focus:border-red-500 focus:ring-red-500/20': error,
+              'border-github-danger focus:border-github-danger focus:ring-github-danger/20': error,
             },
             className
           )}
@@ -28,10 +28,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           {...props}
         />
         {error && (
-          <p className="text-sm text-red-400">{error}</p>
+          <p className="text-sm text-github-danger">{error}</p>
         )}
         {helper && !error && (
-          <p className="text-sm text-white/60">{helper}</p>
+          <p className="text-sm text-github-text-tertiary">{helper}</p>
         )}
       </div>
     );

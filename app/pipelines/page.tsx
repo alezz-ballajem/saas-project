@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
+import { useAuth } from '@/lib/session';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
@@ -29,7 +29,7 @@ const statusFilters = [
 ];
 
 export default function PipelinesPage() {
-  const { data: session, status } = useSession();
+  const { user: session, loading } = useAuth();
   const [pipelines, setPipelines] = useState<any[]>([]);
   const [filteredPipelines, setFilteredPipelines] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -38,10 +38,10 @@ export default function PipelinesPage() {
   const [isLogsOpen, setIsLogsOpen] = useState(false);
 
   useEffect(() => {
-    if (status === 'authenticated') {
+    if (session && !loading) {
       loadPipelines();
     }
-  }, [status]);
+  }, [session, loading]);
 
   useEffect(() => {
     filterPipelines();
@@ -99,24 +99,24 @@ export default function PipelinesPage() {
     };
   };
 
-  if (status === 'loading' || isLoading) {
+  if (loading || isLoading) {
     return (
-      <div className="min-h-screen bg-dark-900 flex items-center justify-center">
+      <div className="min-h-screen bg-github-bg flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto mb-4"></div>
-          <p className="text-white/60">Loading pipelines...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-github-accent mx-auto mb-4"></div>
+          <p className="text-github-text-secondary">Loading pipelines...</p>
         </div>
       </div>
     );
   }
 
-  if (status === 'unauthenticated') {
+  if (!session) {
     return (
-      <div className="min-h-screen bg-dark-900 flex items-center justify-center">
+      <div className="min-h-screen bg-github-bg flex items-center justify-center">
         <Card variant="glass" className="max-w-md mx-auto">
           <CardContent className="p-8 text-center">
-            <h2 className="text-2xl font-bold text-white mb-4">Authentication Required</h2>
-            <p className="text-white/60 mb-6">Please sign in to view pipelines.</p>
+            <h2 className="text-2xl font-bold text-github-text mb-4">Authentication Required</h2>
+            <p className="text-github-text-secondary mb-6">Please sign in to view pipelines.</p>
             <Button onClick={() => window.location.href = '/api/auth/signin'}>
               Sign In
             </Button>
@@ -129,7 +129,7 @@ export default function PipelinesPage() {
   const statusCounts = getStatusCounts();
 
   return (
-    <div className="min-h-screen bg-dark-900">
+    <div className="min-h-screen bg-github-bg">
       <Header />
       
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -142,8 +142,8 @@ export default function PipelinesPage() {
         >
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-4xl font-bold text-white mb-2">Pipeline Monitor</h1>
-              <p className="text-white/60 text-lg">
+              <h1 className="text-4xl font-bold text-github-text mb-2">Pipeline Monitor</h1>
+              <p className="text-github-text-secondary text-lg">
                 Monitor and manage your deployment pipelines in real-time.
               </p>
             </div>
@@ -199,9 +199,9 @@ export default function PipelinesPage() {
           {filteredPipelines.length === 0 ? (
             <Card variant="glass" className="text-center py-12">
               <CardContent>
-                <PlayIcon className="h-16 w-16 text-white/40 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-white mb-2">No pipelines found</h3>
-                <p className="text-white/60 mb-6">
+                <PlayIcon className="h-16 w-16 text-github-text-tertiary mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-github-text mb-2">No pipelines found</h3>
+                <p className="text-github-text-secondary mb-6">
                   {selectedFilter === 'all' 
                     ? 'No pipelines have been created yet.' 
                     : `No pipelines with status "${selectedFilter}" found.`

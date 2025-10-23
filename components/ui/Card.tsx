@@ -2,7 +2,7 @@ import { HTMLAttributes, forwardRef } from 'react';
 import { clsx } from 'clsx';
 
 interface CardProps extends HTMLAttributes<HTMLDivElement> {
-  variant?: 'default' | 'glass' | 'gradient';
+  variant?: 'default' | 'glass' | 'gradient' | 'bordered' | 'elevated';
   hover?: boolean;
 }
 
@@ -16,6 +16,8 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
           {
             'github-card': variant === 'default' || variant === 'glass',
             'bg-gradient-to-br from-github-accent/10 to-github-accent-secondary/10 border border-github-accent/20': variant === 'gradient',
+            'bg-github-bg-secondary border border-github-border-secondary': variant === 'bordered',
+            'bg-github-bg-secondary border border-github-border shadow-lg': variant === 'elevated',
             'github-card-hover': hover,
           },
           className
